@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Events</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="page-container">
+    <div class="page-form" name="main">
+
+      <p class="page-form__date">
+        <select class="page-form__select" size="1">
+          <option selected>Дата </option>
+        </select></p>
+
+      <div class="page-form__contant">
+      </div>
+
+    </div>
+    <div class="page-form__add-event">
+      <div class="form-add">
+        <p class="form-add__title">Добавить мероприятие</p>
+        <div class="form-add__contant">
+
+          <label class="form-add__label">
+            Название<br />
+            <input type="text" class="form-add__input" id="nameAction">
+          </label>
+          <label class="form-add__label">
+            Дата<br />
+            <input type="text" class="form-add__input" id="date">
+          </label>
+          <label class="form-add__label">
+            Время начала<br />
+            <input type="text" class="form-add__input" id="start">
+          </label>
+          <label class="form-add__label">
+            Время конца<br />
+            <input type="text" class="form-add__input" id="end">
+          </label>
+        </div>
+        <p class="form-add__footer">
+          <input class="form-add__button" type="submit" value="добавить">
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="bundle.js"></script>
+
+</body>
+
+</html>
