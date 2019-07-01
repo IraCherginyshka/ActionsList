@@ -1,12 +1,12 @@
 import { actions, days } from './AddAction';
 
-const formatter = new Intl.DateTimeFormat("ru");
+// const formatter = new Intl.DateTimeFormat("ru");
+const select = document.querySelector(".page-form__select");
 
-function renderDay() {
+function renderDay(days) {
 
   const contant = document.querySelector('.page-form__contant');
   contant.innerHTML = '';
-
   days.sort((a, b) => {
     let yearA = a.match(/\d{4}$/)[0];
     let monthA = a.replace((/^\d{2}./), '').replace((/.\d{4}$/), '');
@@ -22,9 +22,6 @@ function renderDay() {
     return dateA - dateB;
   });
 
-  console.log(days);
-
-
   for (let i = 0; i < days.length; i++) {
     contant.innerHTML += `
       <div class="block-day">
@@ -38,7 +35,6 @@ function renderDay() {
     renderList(days[i]);
     renderTitle(days[i]);
   }
-
 }
 
 function renderTitle(day) {
@@ -51,9 +47,8 @@ function renderList(day) {
   list.innerHTML = "";
 
   actions.sort((a, b) => {
-    return a.start.replace(/:/, '') -  b.start.replace(/:/, '');
+    return a.start.replace(/:/, '') - b.start.replace(/:/, '');
   });
-  console.log(actions);
 
   for (let i = 0; i < actions.length; i++) {
 
@@ -72,8 +67,16 @@ function renderList(day) {
   }
 }
 
+function renderSelect() {
+  select.innerHTML = "<option selected>Дата </option>";
+
+  for (let i = 0; i < days.length; i++) {
+    const newOption = new Option(days[i], days[i]);
+    select.appendChild(newOption);
+  }
+}
+
 export {
   renderDay,
-  renderTitle,
-  renderList
-}
+  renderSelect
+} 

@@ -21,12 +21,13 @@ $fw-bold: 700;
   max-width: 1350px;
   min-width: 500px;
   margin: 0 auto;
+  padding: 0 2em; 
 }
 ///////////////////////
 // page-form
 ///////////////////////
 .page-form {
-  padding: 10em 3em 0 3em;
+  padding: 10em 0;
   &__date {
     height: 1em;
     text-align: right;
@@ -44,7 +45,7 @@ $fw-bold: 700;
   &__contant {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
   }
   &__add-event {
     max-width: 750px;
@@ -54,7 +55,7 @@ $fw-bold: 700;
 @media (max-width: 1200px) {
   .page-form {
     &__select {
-      width: 40%;
+      width: 30%;
     }
   }
 }
@@ -108,6 +109,11 @@ $fw-bold: 700;
     &--edit,
     &--delete {
       margin: 0 5px;
+    }
+
+    &--edit,
+    &--delete {
+      cursor: pointer;
     }
   }
 }

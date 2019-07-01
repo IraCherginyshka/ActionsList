@@ -23,10 +23,9 @@ function addAction() {
     }
 
   } else {
-    days.push(newAction.date);
     actions.push(newAction);
+    days.push(newAction.date);
   }
-
 
   function sameDate(element) {
     return element.date === newAction.date;
@@ -39,8 +38,8 @@ function addAction() {
   function sameTimeEarlier(element) {
     return (element.start.replace(/:/, '') < newAction.end.replace(/:/, '') && newAction.end.replace(/:/, '') <= element.end.replace(/:/, ''));
   }
-
 }
+
 
 export {
   actions,

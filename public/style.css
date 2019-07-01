@@ -7076,10 +7076,11 @@ a.text-dark:hover, a.text-dark:focus {
 .page-container {
   max-width: 1350px;
   min-width: 500px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  padding: 0 2em; }
 
 .page-form {
-  padding: 10em 3em 0 3em; }
+  padding: 10em 0; }
   .page-form__date {
     height: 1em;
     text-align: right;
@@ -7095,14 +7096,14 @@ a.text-dark:hover, a.text-dark:focus {
   .page-form__contant {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between; }
+    justify-content: space-around; }
   .page-form__add-event {
     max-width: 750px;
     margin: 150px auto; }
 
 @media (max-width: 1200px) {
   .page-form__select {
-    width: 40%; } }
+    width: 30%; } }
 
 .block-day {
   width: 32%;
@@ -7137,6 +7138,8 @@ a.text-dark:hover, a.text-dark:focus {
       flex-grow: 1; }
     .block-day__item--start, .block-day__item--end, .block-day__item--edit, .block-day__item--delete {
       margin: 0 5px; }
+    .block-day__item--edit, .block-day__item--delete {
+      cursor: pointer; }
 
 @media (max-width: 1200px) {
   .block-day {

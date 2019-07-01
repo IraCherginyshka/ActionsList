@@ -103,8 +103,8 @@ function addAction() {
       actions.push(newAction);
     }
   } else {
-    days.push(newAction.date);
     actions.push(newAction);
+    days.push(newAction.date);
   }
 
   function sameDate(element) {
@@ -139,22 +139,26 @@ var _AddAction = __webpack_require__(0);
 
 var _Render = __webpack_require__(4);
 
-var _DeleteAction = __webpack_require__(10);
+var _DeleteAction = __webpack_require__(5);
 
 var _DeleteAction2 = _interopRequireDefault(_DeleteAction);
 
-__webpack_require__(5);
+var _ShowDay = __webpack_require__(11);
+
+__webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var button = document.querySelector('.form-add__button');
 var contant = document.querySelector('.page-form__contant');
+var select = document.querySelector(".page-form__select");
 
 button.addEventListener('click', function () {
 
   if ((0, _Validator2.default)()) {
     (0, _AddAction.addAction)();
-    (0, _Render.renderDay)();
+    (0, _Render.renderDay)(_AddAction.days);
+    (0, _Render.renderSelect)();
   }
 });
 
@@ -163,8 +167,19 @@ contant.addEventListener('click', function (event) {
 
   if (target.classList.contains("block-day__item--delete")) {
     (0, _DeleteAction2.default)(target);
-    (0, _Render.renderDay)();
+
+    if (_ShowDay.selectDay.length > 0) {
+      (0, _Render.renderDay)(_ShowDay.selectDay);
+    } else {
+      (0, _Render.renderDay)(_AddAction.days);
+    }
+    (0, _Render.renderSelect)();
   }
+});
+
+select.addEventListener('change', function (event) {
+  (0, _ShowDay.showDay)();
+  (0, _Render.renderDay)(_ShowDay.selectDay);
 });
 
 /***/ }),
@@ -234,18 +249,18 @@ exports.default = Action;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderList = exports.renderTitle = exports.renderDay = undefined;
+exports.renderSelect = exports.renderDay = undefined;
 
 var _AddAction = __webpack_require__(0);
 
-var formatter = new Intl.DateTimeFormat("ru");
+// const formatter = new Intl.DateTimeFormat("ru");
+var select = document.querySelector(".page-form__select");
 
-function renderDay() {
+function renderDay(days) {
 
   var contant = document.querySelector('.page-form__contant');
   contant.innerHTML = '';
-
-  _AddAction.days.sort(function (a, b) {
+  days.sort(function (a, b) {
     var yearA = a.match(/\d{4}$/)[0];
     var monthA = a.replace(/^\d{2}./, '').replace(/.\d{4}$/, '');
     var dayA = a.match(/^\d{2}/)[0];
@@ -260,13 +275,11 @@ function renderDay() {
     return dateA - dateB;
   });
 
-  console.log(_AddAction.days);
+  for (var i = 0; i < days.length; i++) {
+    contant.innerHTML += '\n      <div class="block-day">\n      <div class="block-day__title">' + days[i] + '</div>\n      <div class="block-day__content">\n        <ul class="block-day__list" data-id=\'' + days[i] + '\'>\n        </ul>\n      </div>\n      </div>';
 
-  for (var i = 0; i < _AddAction.days.length; i++) {
-    contant.innerHTML += '\n      <div class="block-day">\n      <div class="block-day__title">' + _AddAction.days[i] + '</div>\n      <div class="block-day__content">\n        <ul class="block-day__list" data-id=\'' + _AddAction.days[i] + '\'>\n        </ul>\n      </div>\n      </div>';
-
-    renderList(_AddAction.days[i]);
-    renderTitle(_AddAction.days[i]);
+    renderList(days[i]);
+    renderTitle(days[i]);
   }
 }
 
@@ -282,7 +295,6 @@ function renderList(day) {
   _AddAction.actions.sort(function (a, b) {
     return a.start.replace(/:/, '') - b.start.replace(/:/, '');
   });
-  console.log(_AddAction.actions);
 
   for (var i = 0; i < _AddAction.actions.length; i++) {
 
@@ -292,22 +304,20 @@ function renderList(day) {
   }
 }
 
+function renderSelect() {
+  select.innerHTML = "<option selected>Дата </option>";
+
+  for (var i = 0; i < _AddAction.days.length; i++) {
+    var newOption = new Option(_AddAction.days[i], _AddAction.days[i]);
+    select.appendChild(newOption);
+  }
+}
+
 exports.renderDay = renderDay;
-exports.renderTitle = renderTitle;
-exports.renderList = renderList;
+exports.renderSelect = renderSelect;
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -321,8 +331,10 @@ var _AddAction = __webpack_require__(0);
 
 function deleteAction(target) {
 
+  var deleteDate = target.parentNode.parentNode.parentNode.dataset.id;
+
   var index = _AddAction.actions.findIndex(function (element) {
-    if (element.date === target.parentNode.parentNode.parentNode.dataset.id && element.start === target.parentNode.querySelector('.block-day__item--start').innerText) {
+    if (element.date === deleteDate && element.start === target.parentNode.querySelector('.block-day__item--start').innerText) {
       return element;
     }
   });
@@ -330,12 +342,12 @@ function deleteAction(target) {
   _AddAction.actions.splice(index, 1);
 
   var actionInDay = _AddAction.actions.filter(function (element) {
-    return element.date === target.parentNode.parentNode.parentNode.dataset.id;
+    return element.date === deleteDate;
   });
 
   if (actionInDay.length == 0) {
     var _index = _AddAction.days.findIndex(function (element) {
-      if (element === target.parentNode.parentNode.parentNode.dataset.id) {
+      if (element === deleteDate) {
         return element;
       }
     });
@@ -344,6 +356,46 @@ function deleteAction(target) {
 }
 
 exports.default = deleteAction;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.selectDay = exports.showDay = undefined;
+
+var _AddAction = __webpack_require__(0);
+
+var selectDay = [];
+
+function showDay() {
+
+  if (event.target.value !== 'Дата') {
+    exports.selectDay = selectDay = _AddAction.days.filter(function (day) {
+      return day === event.target.value;
+    });
+  } else {
+    exports.selectDay = selectDay = _AddAction.days;
+  }
+}
+
+exports.showDay = showDay;
+exports.selectDay = selectDay;
 
 /***/ })
 /******/ ]);

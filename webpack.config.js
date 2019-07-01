@@ -1,6 +1,6 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin'); 
-// const HTMLWebpackPlugin = require('html-webpack-plugin');
+
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
@@ -54,11 +54,6 @@ module.exports = {
   },
 
   plugins: [
-  
     new ExtractTextPlugin('style.css')
-
-    // new HTMLWebpackPlugin({
-    //   template: './index.html'
-    // }) 
   ]
 };

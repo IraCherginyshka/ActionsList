@@ -3,9 +3,10 @@ import { actions, days } from './AddAction';
 
 function deleteAction(target) {
 
+  const deleteDate = target.parentNode.parentNode.parentNode.dataset.id;
+
   let index = actions.findIndex((element) => {
-    if (element.date === target.parentNode.parentNode.parentNode.dataset.id &&
-      element.start === target.parentNode.querySelector('.block-day__item--start').innerText) {
+    if (element.date === deleteDate && element.start === target.parentNode.querySelector('.block-day__item--start').innerText) {
       return element;
     }
   });
@@ -13,12 +14,12 @@ function deleteAction(target) {
   actions.splice(index, 1);
 
   let actionInDay = actions.filter(element => {
-    return element.date === target.parentNode.parentNode.parentNode.dataset.id;
+    return element.date === deleteDate;
   });
 
   if (actionInDay.length == 0) {
     let index = days.findIndex((element) => {
-      if (element === target.parentNode.parentNode.parentNode.dataset.id) {
+      if (element === deleteDate) {
         return element;
       }
     });
